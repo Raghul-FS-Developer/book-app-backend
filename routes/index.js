@@ -36,20 +36,18 @@ router.post("/register", async (req, res) => {
             console.log(err);
             res.json({ statuscode: 400, message: "Email Already Exist" });
           } else {
-            res.json({
-              statuscode: 200,
-            });
+            
             let { username } = data;
 
             var sender = nodemailer.createTransport({
               service: "gmail",
               auth: {
-                user: "fullstackdeveloper772@gmail.com",
+                user: "stackdeveloper112@gmail.com",
                 pass: process.env.pass,
               },
             });
             var composeMail = {
-              from: "fullstackdeveloper772@gmail.com",
+              from: "stackdeveloper112@gmail.com",
               to: req.body.email,
               subject: `Account-verification`,
               text: "",
@@ -64,7 +62,9 @@ router.post("/register", async (req, res) => {
             sender.sendMail(composeMail, (error) => {
               if (error) {
                 console.log(error);
-              }
+              }res.json({
+                statuscode: 200,
+              });
             });
           }
         });
@@ -115,20 +115,18 @@ router.post("/login", async (req, res) => {
           });
         }
       } else {
-        res.json({
-          message: "Account is InActive , Check Your Mail For Activaton Link",
-        });
+        
         let { username } = login;
 
         var sender = nodemailer.createTransport({
           service: "gmail",
           auth: {
-            user: "fullstackdeveloper772@gmail.com",
+            user: "stackdeveloper112@gmail.com",
             pass: process.env.pass,
           },
         });
         var composeMail = {
-          from: "fullstackdeveloper772@gmail.com",
+          from: "stackdeveloper112@gmail.com",
           to: login.email,
           subject: `Account-verification`,
           text: "",
@@ -143,6 +141,10 @@ router.post("/login", async (req, res) => {
         sender.sendMail(composeMail, (error) => {
           if (error) {
             console.log(error);
+          }else{
+            res.json({
+              message: "Account is InActive , Check Your Mail For Activaton Link",
+            });
           }
         });
       }
@@ -367,12 +369,12 @@ router.post("/forgot-password", async (req, res) => {
       var sender = nodemailer.createTransport({
         service: "gmail",
         auth: {
-          user: "fullstackdeveloper772@gmail.com",
+          user: "stackdeveloper112@gmail.com",
           pass: process.env.pass,
         },
       });
       var composeMail = {
-        from: "fullstackdeveloper772@gmail.com",
+        from: "stackdeveloper112@gmail.com",
         to: req.body.email,
         subject: `Reset-password-verification`,
         text: "",
@@ -387,10 +389,12 @@ router.post("/forgot-password", async (req, res) => {
       sender.sendMail(composeMail, (error) => {
         if (error) {
           console.log(error);
+        }else{
+          res.json({ statuscode: 200});
         } 
       });
 
-      res.json({ statuscode: 200});
+     
     
     } else {
       res.json({ statuscode: 400, message: "Email does not exist" });
